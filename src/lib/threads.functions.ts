@@ -75,7 +75,7 @@ export const getThreadMessages = createServerFn({ method: "POST" })
     const messages = (rows ?? []).map((m) => ({
       id: m.id as string,
       role: m.role as "user" | "assistant" | "system",
-      parts: (m.parts as unknown[]) ?? [],
+      parts: JSON.parse(JSON.stringify(m.parts ?? [])) as Array<Record<string, unknown>>,
     }));
     return { thread, messages };
   });

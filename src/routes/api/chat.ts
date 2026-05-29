@@ -128,23 +128,22 @@ export const Route = createFileRoute("/api/chat")({
           }),
         };
 
+        const modelMessages = await convertToModelMessages(body.messages);
         const result = streamText({
           model,
           system: SYSTEM_PROMPT + memBlock,
-          messages: convertToModelMessages(body.messages),
+          messages: modelMessages,
           tools,
           stopWhen: stepCountIs(50),
         });
 
         const threadId = body.threadId;
+        const inputMessages = body.messages;
         return result.toUIMessageStreamResponse({
-          originalMessages: body.messages,
+          originalMessages: inputMessages,
           onFinish: async ({ messages: finalMessages }) => {
             try {
-              // Persist all assistant messages produced in this turn that
-              // aren't already in the DB. We compare against ids from the
-              // input messages array.
-              const existingIds = new Set(body.messages!.map((m) => m.id));
+              const existingIds = new Set(inputMessages.map((m) => m.id));
               const newAssistant = finalMessages.filter(
                 (m) => m.role === "assistant" && !existingIds.has(m.id),
               );
@@ -152,7 +151,7 @@ export const Route = createFileRoute("/api/chat")({
                 await supabaseAdmin.from("messages").insert({
                   thread_id: threadId,
                   role: "assistant",
-                  parts: m.parts as unknown as object,
+                  parts: JSON.parse(JSON.stringify(m.parts)),
                 });
               }
               await supabaseAdmin
