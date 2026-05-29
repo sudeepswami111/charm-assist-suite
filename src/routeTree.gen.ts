@@ -9,38 +9,130 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AuthenticatedMemoryRouteImport } from './routes/_authenticated/memory'
+import { Route as AuthenticatedCRouteImport } from './routes/_authenticated/c'
+import { Route as AuthenticatedCIndexRouteImport } from './routes/_authenticated/c/index'
+import { Route as AuthenticatedCThreadIdRouteImport } from './routes/_authenticated/c/$threadId'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMemoryRoute = AuthenticatedMemoryRouteImport.update({
+  id: '/memory',
+  path: '/memory',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedCRoute = AuthenticatedCRouteImport.update({
+  id: '/c',
+  path: '/c',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedCIndexRoute = AuthenticatedCIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedCRoute,
+} as any)
+const AuthenticatedCThreadIdRoute = AuthenticatedCThreadIdRouteImport.update({
+  id: '/$threadId',
+  path: '/$threadId',
+  getParentRoute: () => AuthenticatedCRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/c': typeof AuthenticatedCRouteWithChildren
+  '/memory': typeof AuthenticatedMemoryRoute
+  '/api/chat': typeof ApiChatRoute
+  '/c/$threadId': typeof AuthenticatedCThreadIdRoute
+  '/c/': typeof AuthenticatedCIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/memory': typeof AuthenticatedMemoryRoute
+  '/api/chat': typeof ApiChatRoute
+  '/c/$threadId': typeof AuthenticatedCThreadIdRoute
+  '/c': typeof AuthenticatedCIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/c': typeof AuthenticatedCRouteWithChildren
+  '/_authenticated/memory': typeof AuthenticatedMemoryRoute
+  '/api/chat': typeof ApiChatRoute
+  '/_authenticated/c/$threadId': typeof AuthenticatedCThreadIdRoute
+  '/_authenticated/c/': typeof AuthenticatedCIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/c'
+    | '/memory'
+    | '/api/chat'
+    | '/c/$threadId'
+    | '/c/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/login' | '/memory' | '/api/chat' | '/c/$threadId' | '/c'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/c'
+    | '/_authenticated/memory'
+    | '/api/chat'
+    | '/_authenticated/c/$threadId'
+    | '/_authenticated/c/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +140,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/memory': {
+      id: '/_authenticated/memory'
+      path: '/memory'
+      fullPath: '/memory'
+      preLoaderRoute: typeof AuthenticatedMemoryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/c': {
+      id: '/_authenticated/c'
+      path: '/c'
+      fullPath: '/c'
+      preLoaderRoute: typeof AuthenticatedCRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/c/': {
+      id: '/_authenticated/c/'
+      path: '/'
+      fullPath: '/c/'
+      preLoaderRoute: typeof AuthenticatedCIndexRouteImport
+      parentRoute: typeof AuthenticatedCRoute
+    }
+    '/_authenticated/c/$threadId': {
+      id: '/_authenticated/c/$threadId'
+      path: '/$threadId'
+      fullPath: '/c/$threadId'
+      preLoaderRoute: typeof AuthenticatedCThreadIdRouteImport
+      parentRoute: typeof AuthenticatedCRoute
+    }
   }
 }
 
+interface AuthenticatedCRouteChildren {
+  AuthenticatedCThreadIdRoute: typeof AuthenticatedCThreadIdRoute
+  AuthenticatedCIndexRoute: typeof AuthenticatedCIndexRoute
+}
+
+const AuthenticatedCRouteChildren: AuthenticatedCRouteChildren = {
+  AuthenticatedCThreadIdRoute: AuthenticatedCThreadIdRoute,
+  AuthenticatedCIndexRoute: AuthenticatedCIndexRoute,
+}
+
+const AuthenticatedCRouteWithChildren = AuthenticatedCRoute._addFileChildren(
+  AuthenticatedCRouteChildren,
+)
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedCRoute: typeof AuthenticatedCRouteWithChildren
+  AuthenticatedMemoryRoute: typeof AuthenticatedMemoryRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCRoute: AuthenticatedCRouteWithChildren,
+  AuthenticatedMemoryRoute: AuthenticatedMemoryRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
