@@ -5,7 +5,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "NOVA — Your AI Assistant" },
-      { name: "description", content: "Voice-ready AI assistant with persistent memory and tools." },
+      {
+        name: "description",
+        content: "Voice-ready AI assistant with persistent memory and tools.",
+      },
     ],
   }),
   component: Landing,
@@ -19,7 +22,10 @@ function Landing() {
           <NovaOrb size={36} active />
           <span className="font-display text-lg font-semibold tracking-tight">NOVA</span>
         </div>
-        <Link to="/login" className="rounded-full border border-white/15 px-4 py-2 text-sm hover:bg-white/5 transition">
+        <Link
+          to="/login"
+          className="rounded-full border border-white/15 px-4 py-2 text-sm hover:bg-white/5 transition"
+        >
           Sign in
         </Link>
       </header>
@@ -35,14 +41,20 @@ function Landing() {
           <span className="text-glow">always online.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
-          NOVA listens, thinks, and remembers. Threaded conversations, voice in and out, tools that act —
-          all on a private Lovable Cloud backend.
+          NOVA listens, thinks, and remembers. Threaded conversations, voice in and out, tools that
+          act — all on a private Lovable Cloud backend.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <Link to="/login" className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground glow-cyan hover:opacity-90 transition">
+          <Link
+            to="/login"
+            className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground glow-cyan hover:opacity-90 transition"
+          >
             Start a conversation
           </Link>
-          <a href="#capabilities" className="rounded-full border border-white/15 px-6 py-3 text-sm hover:bg-white/5 transition">
+          <a
+            href="#capabilities"
+            className="rounded-full border border-white/15 px-6 py-3 text-sm hover:bg-white/5 transition"
+          >
             See capabilities
           </a>
         </div>
@@ -52,9 +64,18 @@ function Landing() {
         <div className="grid gap-4 md:grid-cols-3">
           {[
             { t: "Threaded chats", d: "Each conversation lives at its own URL with full history." },
-            { t: "Long-term memory", d: "NOVA remembers preferences and recalls them across sessions." },
-            { t: "Voice ready", d: "Press to talk, hear replies back — Web Speech in any modern browser." },
-            { t: "Tools that act", d: "Web search, time, summarization, memory writes with approval." },
+            {
+              t: "Long-term memory",
+              d: "NOVA remembers preferences and recalls them across sessions.",
+            },
+            {
+              t: "Voice ready",
+              d: "Press to talk, hear replies back — Web Speech in any modern browser.",
+            },
+            {
+              t: "Tools that act",
+              d: "Web search, time, summarization, memory writes with approval.",
+            },
             { t: "Markdown native", d: "Code, lists, links — streamed and rendered cleanly." },
             { t: "Yours alone", d: "Auth-gated. Row-level security. Your data, your account." },
           ].map((c) => (

@@ -1,10 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 
 @theme inline {
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
@@ -101,23 +101,62 @@
 }
 
 @layer base {
-  html, body {
+  html,
+  body {
     background: radial-gradient(ellipse at top, oklch(0.2 0.04 265) 0%, oklch(0.12 0.03 260) 60%);
     background-attachment: fixed;
     min-height: 100vh;
   }
-  * { border-color: var(--color-border); }
-  body { background-color: transparent; color: var(--color-foreground); font-family: var(--font-sans); }
-  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: transparent;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
 }
 
 @layer utilities {
-  .glow-cyan { box-shadow: 0 0 40px -8px oklch(0.78 0.16 220 / 0.6); }
-  .glow-violet { box-shadow: 0 0 40px -8px oklch(0.62 0.22 295 / 0.5); }
-  .glass { background: oklch(1 0 0 / 0.04); backdrop-filter: blur(12px); border: 1px solid oklch(1 0 0 / 0.08); }
-  .text-glow { text-shadow: 0 0 20px oklch(0.78 0.16 220 / 0.5); }
-  @keyframes orb-spin { to { transform: rotate(360deg); } }
-  @keyframes orb-pulse { 0%,100% { opacity: 0.85; } 50% { opacity: 1; } }
-  .orb-spin { animation: orb-spin 8s linear infinite; }
-  .orb-pulse { animation: orb-pulse 2.5s ease-in-out infinite; }
+  .glow-cyan {
+    box-shadow: 0 0 40px -8px oklch(0.78 0.16 220 / 0.6);
+  }
+  .glow-violet {
+    box-shadow: 0 0 40px -8px oklch(0.62 0.22 295 / 0.5);
+  }
+  .glass {
+    background: oklch(1 0 0 / 0.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid oklch(1 0 0 / 0.08);
+  }
+  .text-glow {
+    text-shadow: 0 0 20px oklch(0.78 0.16 220 / 0.5);
+  }
+  @keyframes orb-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes orb-pulse {
+    0%,
+    100% {
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  .orb-spin {
+    animation: orb-spin 8s linear infinite;
+  }
+  .orb-pulse {
+    animation: orb-pulse 2.5s ease-in-out infinite;
+  }
 }

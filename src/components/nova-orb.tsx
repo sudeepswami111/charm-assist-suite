@@ -1,6 +1,14 @@
 import { cn } from "@/lib/utils";
 
-export function NovaOrb({ size = 32, active = false, className }: { size?: number; active?: boolean; className?: string }) {
+export function NovaOrb({
+  size = 32,
+  active = false,
+  className,
+}: {
+  size?: number;
+  active?: boolean;
+  className?: string;
+}) {
   return (
     <div
       className={cn("relative inline-flex items-center justify-center", className)}
@@ -25,7 +33,8 @@ export function NovaOrb({ size = 32, active = false, className }: { size?: numbe
       <div
         className="absolute inset-[35%] rounded-full"
         style={{
-          background: "radial-gradient(circle, oklch(0.95 0.05 220) 0%, var(--cyan-glow) 60%, transparent 100%)",
+          background:
+            "radial-gradient(circle, oklch(0.95 0.05 220) 0%, var(--cyan-glow) 60%, transparent 100%)",
           boxShadow: "0 0 12px var(--cyan-glow)",
         }}
       />

@@ -56,7 +56,9 @@ export function ChatSidebar() {
       </div>
 
       <nav className="mt-4 flex-1 overflow-y-auto px-2">
-        <p className="px-2 pb-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Threads</p>
+        <p className="px-2 pb-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+          Threads
+        </p>
         <ul className="space-y-0.5">
           {(data?.threads ?? []).map((t) => (
             <li key={t.id} className="group flex items-center">

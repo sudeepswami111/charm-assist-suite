@@ -15,10 +15,19 @@ dist-ssr
 .tanstack/**
 .nitro
 *.local
+*.tsbuildinfo
+
+# Environment variables — never commit secrets
+.env
+.env.*
+!.env.example
 
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+
+# Test coverage
+coverage/
 
 # Editor directories and files
 .vscode/*

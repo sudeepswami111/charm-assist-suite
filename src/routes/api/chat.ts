@@ -96,10 +96,7 @@ export const Route = createFileRoute("/api/chat")({
             execute: async ({ key, value }) => {
               const { error } = await supabaseAdmin
                 .from("memories")
-                .upsert(
-                  { user_id: userId, key, value },
-                  { onConflict: "user_id,key" },
-                );
+                .upsert({ user_id: userId, key, value }, { onConflict: "user_id,key" });
               if (error) return { ok: false, error: error.message };
               return { ok: true, key, value };
             },
@@ -123,7 +120,11 @@ export const Route = createFileRoute("/api/chat")({
               max_sentences: z.number().int().min(1).max(10).default(3),
             }),
             execute: async ({ text, max_sentences }) => {
-              return { text, max_sentences, note: "Summarize the provided text yourself in the reply." };
+              return {
+                text,
+                max_sentences,
+                note: "Summarize the provided text yourself in the reply.",
+              };
             },
           }),
         };

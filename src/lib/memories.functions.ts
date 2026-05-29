@@ -26,7 +26,10 @@ export const upsertMemory = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
       .from("memories")
-      .upsert({ user_id: context.userId, key: data.key, value: data.value }, { onConflict: "user_id,key" });
+      .upsert(
+        { user_id: context.userId, key: data.key, value: data.value },
+        { onConflict: "user_id,key" },
+      );
     if (error) throw new Error(error.message);
     return { ok: true };
   });

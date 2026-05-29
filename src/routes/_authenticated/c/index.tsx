@@ -15,7 +15,9 @@ function NewThread() {
   useEffect(() => {
     if (ran.current) return;
     ran.current = true;
-    create().then((r) => navigate({ to: "/c/$threadId", params: { threadId: r.id }, replace: true }));
+    create().then((r) =>
+      navigate({ to: "/c/$threadId", params: { threadId: r.id }, replace: true }),
+    );
   }, [create, navigate]);
   return (
     <div className="flex h-full items-center justify-center">

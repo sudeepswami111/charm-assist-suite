@@ -28,7 +28,8 @@ function MemoryPage() {
     mutationFn: async (v: { key: string; value: string }) => upsert({ data: v }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["memories"] });
-      setKey(""); setValue("");
+      setKey("");
+      setValue("");
       toast.success("Memory saved");
     },
     onError: (e) => toast.error(e instanceof Error ? e.message : "Save failed"),
@@ -45,34 +46,61 @@ function MemoryPage() {
 
   return (
     <div className="mx-auto h-screen w-full max-w-3xl overflow-y-auto px-6 py-8">
-      <Link to="/c" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+      <Link
+        to="/c"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+      >
         <ArrowLeft className="size-4" /> Back to chat
       </Link>
       <h1 className="mt-4 font-display text-3xl font-semibold">Memory</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Facts and preferences NOVA remembers about you. NOVA can add to this list during conversations.
+        Facts and preferences NOVA remembers about you. NOVA can add to this list during
+        conversations.
       </p>
 
       <form onSubmit={submit} className="glass mt-8 space-y-3 rounded-2xl p-5">
         <div>
           <Label htmlFor="key">Key</Label>
-          <Input id="key" value={key} onChange={(e) => setKey(e.target.value)} placeholder="favorite_language" maxLength={80} required />
+          <Input
+            id="key"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+            placeholder="favorite_language"
+            maxLength={80}
+            required
+          />
         </div>
         <div>
           <Label htmlFor="val">Value</Label>
-          <Textarea id="val" value={value} onChange={(e) => setValue(e.target.value)} placeholder="TypeScript" maxLength={2000} required />
+          <Textarea
+            id="val"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="TypeScript"
+            maxLength={2000}
+            required
+          />
         </div>
-        <Button type="submit" disabled={upsertMut.isPending} className="glow-cyan">Save memory</Button>
+        <Button type="submit" disabled={upsertMut.isPending} className="glow-cyan">
+          Save memory
+        </Button>
       </form>
 
       <ul className="mt-8 space-y-2">
         {(data?.memories ?? []).map((m) => (
-          <li key={m.id} className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-card/40 p-4">
+          <li
+            key={m.id}
+            className="flex items-start justify-between gap-3 rounded-xl border border-white/5 bg-card/40 p-4"
+          >
             <div className="min-w-0 flex-1">
               <div className="font-mono text-xs text-primary">{m.key}</div>
               <div className="mt-1 text-sm">{m.value}</div>
             </div>
-            <button onClick={() => delMut.mutate(m.id)} className="text-muted-foreground hover:text-destructive" aria-label="Delete">
+            <button
+              onClick={() => delMut.mutate(m.id)}
+              className="text-muted-foreground hover:text-destructive"
+              aria-label="Delete"
+            >
               <Trash2 className="size-4" />
             </button>
           </li>
